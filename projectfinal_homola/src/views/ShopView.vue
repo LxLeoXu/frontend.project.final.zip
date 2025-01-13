@@ -28,12 +28,17 @@
   </template>
   
   <script>
+  import { ref, computed } from 'vue'; // Pridali sme computed
   import { useCartStore } from '@/stores/cart';
   
   export default {
     name: "ShopView",
     setup() {
       const cartStore = useCartStore();
+  
+      // Reaktívne produkty a stav načítania
+      const products = ref([]);
+      const loading = ref(true);
   
       // Funkcia na načítanie produktov
       async function fetchProducts() {
@@ -50,17 +55,14 @@
         }
       }
   
-      const products = ref([]);
-      const loading = ref(true);
-  
       // Načítanie produktov pri inicializácii
       fetchProducts();
   
       return {
         products,
         loading,
-        cartItems: cartStore.items,
-        totalAmount: cartStore.totalAmount,
+        cartItems: computed(() => cartStore.items), // Dynamicky odkaz na položky v košíku
+        totalAmount: computed(() => cartStore.totalAmount), // Dynamická celková cena
         addToCart: cartStore.addToCart,
         removeFromCart: cartStore.removeFromCart,
         clearCart: cartStore.clearCart,

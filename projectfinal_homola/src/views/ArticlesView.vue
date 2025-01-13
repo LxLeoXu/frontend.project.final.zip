@@ -4,17 +4,23 @@
       <div v-if="loading">Loading articles...</div>
       <div v-else-if="error">{{ error }}</div>
       <div v-else>
-        <div v-for="article in articles" :key="article.id" class="article">
-          <h2>{{ article.title }}</h2>
-          <p>{{ article.content }}</p>
-        </div>
+        <ul>
+          <li v-for="article in articles" :key="article.id">
+            <ArticleItem :article="article" />
+          </li>
+        </ul>
       </div>
     </div>
   </template>
   
   <script>
+  import ArticleItem from "@/components/ArticleItem.vue";
+  
   export default {
     name: "ArticlesView",
+    components: {
+      ArticleItem,
+    },
     data() {
       return {
         articles: [],
@@ -44,23 +50,18 @@
   };
   </script>
   
-  <style>
+  <style scoped>
   .articles {
     padding: 20px;
   }
   
-  .article {
-    margin-bottom: 20px;
+  ul {
+    list-style: none;
+    padding: 0;
   }
   
-  .article h2 {
+  li {
     margin-bottom: 10px;
-    font-size: 20px;
-  }
-  
-  .article p {
-    font-size: 16px;
-    color: #555;
   }
   </style>
   
