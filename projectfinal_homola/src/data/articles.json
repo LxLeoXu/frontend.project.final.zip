@@ -1,0 +1,18 @@
+[
+    {
+      "id": 1,
+      "title": "AMD Radeon RX 9070 XT",
+      "content": "The Radeon RX 9070 XT is a graphics card by AMD, expected to launch on January 24, 2025. Built on the 4 nm process and based on the Navi 48 graphics processor (Navi 48 XT variant), the card supports DirectX 12 Ultimate. This ensures that all modern games will run on the Radeon RX 9070 XT. Additionally, the DirectX 12 Ultimate capability guarantees support for hardware-raytracing, variable-rate shading, and more in upcoming video games. It features 4096 shading units, 256 texture mapping units, and 96 ROPs. The card also has 64 raytracing acceleration cores. AMD has paired 16 GB of GDDR6 memory with the Radeon RX 9070 XT, connected using a 256-bit memory interface. The GPU operates at a frequency of 2400 MHz, which can be boosted up to 2970 MHz, with memory running at 2438 MHz (19.5 Gbps effective). Being a dual-slot card, the AMD Radeon RX 9070 XT draws power from 2x 8-pin power connectors, with power draw rated at a maximum of 260 W. Display outputs include 1x HDMI 2.1a and 3x DisplayPort 2.1. The Radeon RX 9070 XT is connected to the rest of the system using a PCI-Express 4.0 x16 interface. The card's dimensions are 267 mm x 111 mm x 50 mm, and it features a dual-slot cooling solution."
+    },
+    {
+      "id": 2,
+      "title": "Understanding Vue Router",
+      "content": "Vue Router is the official router for Vue.js."
+    },
+    {
+      "id": 3,
+      "title": "State Management with Pinia",
+      "content": "Pinia is a state management library for Vue.js."
+    }
+  ]
+  
