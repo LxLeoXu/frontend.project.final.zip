@@ -1,24 +1,31 @@
+
 <template>
     <footer class="footer">
-      <span>&copy; 2025 ElectroShop. All rights reserved.</span>
+      <div class="footer-content">
+        <p>&copy; 2025 Your Company. All rights reserved.</p>
+      </div>
     </footer>
   </template>
   
   <script>
   export default {
-    name: 'Footer',
+    name: "Footer",
   };
   </script>
   
-  <style>
+  <style scoped>
   .footer {
-    background: #007bff;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
     width: 100%;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    position: relative; /* No fixed positioning */
+  }
+  
+  .footer-content {
+    font-size: 0.9rem;
+    color: #6c757d;
   }
   </style>
   
