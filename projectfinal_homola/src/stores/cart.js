@@ -20,18 +20,24 @@ export const useCartStore = defineStore('cart', () => {
       items.value.push({ ...product, quantity: 1 });
     }
     saveCart();
+    notify(`Added "${product.name}" to the cart.`);
   }
 
   // Funkcia na odstránenie položky z košíka
   function removeFromCart(productId) {
-    items.value = items.value.filter((item) => item.id !== productId);
-    saveCart();
+    const product = items.value.find((item) => item.id === productId);
+    if (product) {
+      items.value = items.value.filter((item) => item.id !== productId);
+      saveCart();
+      notify(`Removed "${product.name}" from the cart.`);
+    }
   }
 
   // Funkcia na vymazanie celého košíka
   function clearCart() {
     items.value = [];
     saveCart();
+    notify("Cleared the cart.");
   }
 
   // Ukladanie do localStorage
@@ -41,10 +47,20 @@ export const useCartStore = defineStore('cart', () => {
 
   // Načítanie z localStorage
   function loadCart() {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      items.value = JSON.parse(savedCart);
+    try {
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        items.value = JSON.parse(savedCart);
+      }
+    } catch (error) {
+      console.error("Error loading cart from localStorage:", error);
     }
+  }
+
+  // Funkcia na zobrazenie notifikácie
+  function notify(message) {
+    // Jednoduchý príklad, nahradiť vlastným riešením (napr. Toast)
+    console.log(message);
   }
 
   // Načítanie košíka pri inicializácii

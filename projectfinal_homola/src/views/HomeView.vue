@@ -1,17 +1,18 @@
 <script>
 import TopProducts from "@/components/TopProducts.vue";
+import Gallery from "@/components/Gallery.vue";
 import productsData from "@/data/data.json";
 import { useCounterStore } from "@/stores/counter";
 import { useCartStore } from "@/stores/cart";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router"; // Import Vue Router composable
 
 export default {
   name: "HomeView",
-  components: { TopProducts },
+  components: { TopProducts, Gallery },
   setup() {
     // Router
-    const router = useRouter(); // Použitie Vue Router composable
+    const router = useRouter();
 
     // Counter Store
     const counterStore = useCounterStore();
@@ -22,18 +23,51 @@ export default {
     // Lokálne reaktívne premenné
     const showProducts = ref(false);
     const topProducts = ref([]);
+    const galleryImages = ref([]);
 
     // Metódy
     const loadTopProducts = () => {
-      topProducts.value = productsData.products.filter(
+      const filteredProducts = productsData.products.filter(
         (product) => product.slug === "top-products"
       );
-      showProducts.value = true;
+      if (filteredProducts.length > 0) {
+        // Update image paths for compatibility
+        topProducts.value = filteredProducts.map(product => ({
+          ...product,
+          image: product.image.replace('@/', '/public/')
+        }));
+        showProducts.value = true;
+      } else {
+        console.error("No top products found.");
+      }
     };
 
     const goToArticles = () => {
       router.push("/articles"); // Použitie routera na navigáciu
     };
+
+    const goToShop = () => {
+      router.push("/shop"); // Malé písmeno pre správnu URL
+    };
+
+    const loadGalleryImages = async () => {
+      try {
+        const response = await fetch("/data/data2.json");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const shopData = await response.json();
+        galleryImages.value = shopData.categories.flatMap(category =>
+          category.products.map(product => "/images/" + product.image.split("/").pop())
+        );
+      } catch (error) {
+        console.error("Failed to load gallery images:", error);
+      }
+    };
+
+    onMounted(() => {
+      // Optional initialization if needed
+    });
 
     return {
       count: counterStore.count,
@@ -54,6 +88,9 @@ export default {
       topProducts,
       loadTopProducts,
       goToArticles,
+      goToShop,
+      galleryImages,
+      loadGalleryImages
     };
   },
 };
@@ -75,14 +112,26 @@ export default {
         <h2>Top Products</h2>
         <p>Browse our collection of top-rated gadgets and devices.</p>
       </div>
-      <div class="feature-box">
-        <h2>Special Offers</h2>
+      <div class="feature-box" @click="goToShop">
+        <h2>Shop</h2>
         <p>Don't miss out on exclusive deals and discounts.</p>
+      </div>
+      <div class="feature-box" @click="loadGalleryImages">
+        <h2>Gallery</h2>
+        <p>Click to load our image gallery.</p>
       </div>
     </section>
 
     <!-- Dynamicky zobrazené produkty -->
     <TopProducts v-if="showProducts" :products="topProducts" />
+
+    <!-- Gallery component -->
+    <section class="gallery-section" v-if="galleryImages.length > 0">
+      <h2>Image Gallery</h2>
+      <div class="gallery">
+        <img v-for="(image, index) in galleryImages" :key="index" :src="image" alt="Gallery Image" class="gallery-image" />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -125,5 +174,31 @@ export default {
 
 .feature-box p {
   color: #555;
+}
+
+.gallery-section {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.gallery {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.gallery-image {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
 }
 </style>

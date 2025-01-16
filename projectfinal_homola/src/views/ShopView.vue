@@ -36,6 +36,7 @@
       <!-- Zoznam produktov -->
       <div v-if="selectedProducts.length > 0" class="products">
         <div v-for="product in selectedProducts" :key="product.id" class="product-card">
+          <img :src="formatImagePath(product.image)" :alt="product.name" class="product-image" />
           <h2>{{ product.name }}</h2>
           <p>Price: {{ product.price }}€</p>
           <button @click="addToCart(product)">Add to Cart</button>
@@ -84,13 +85,21 @@
           loading.value = false;
         }
       }
+
+      const formatImagePath = (path) => {
+        return path.startsWith('/images') ? path : `/images${path}`;
+        };
+
   
       const toggleCartDropdown = () => {
         showCartDropdown.value = !showCartDropdown.value;
       };
   
       const loadProducts = (products) => {
-        selectedProducts.value = products;
+        selectedProducts.value = products.map(product => ({
+          ...product,
+          image: formatImagePath(product.image)
+        }));
       };
   
       const closeModal = () => {
@@ -126,6 +135,7 @@
         closeModal,
         showBuyModal,
         handleCheckoutSubmit,
+        formatImagePath
       };
     },
   };
@@ -213,6 +223,13 @@
     width: 200px;
     text-align: center;
   }
+
+  .product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
   
   button {
     background-color: #007bff;
@@ -227,4 +244,3 @@
     background-color: #0056b3;
   }
   </style>
-  
