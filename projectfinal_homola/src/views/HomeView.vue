@@ -1,33 +1,39 @@
 <script>
 import TopProducts from "@/components/TopProducts.vue";
 import productsData from "@/data/data.json";
-import { useCounterStore } from '@/stores/counter';
-import { useCartStore } from '@/stores/cart';
+import { useCounterStore } from "@/stores/counter";
+import { useCartStore } from "@/stores/cart";
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router"; // Import Vue Router composable
 
 export default {
   name: "HomeView",
   components: { TopProducts },
-  data() {
-    return {
-      showProducts: false,
-      topProducts: [],
-    };
-  },
   setup() {
+    // Router
+    const router = useRouter(); // Použitie Vue Router composable
+
+    // Counter Store
+    const counterStore = useCounterStore();
+
+    // Cart Store
     const cartStore = useCartStore();
 
-    return {
-      items: cartStore.items,
-      totalItems: cartStore.totalItems,
-      totalAmount: cartStore.totalAmount,
-      addToCart: cartStore.addToCart,
-      removeFromCart: cartStore.removeFromCart,
-      clearCart: cartStore.clearCart,
+    // Lokálne reaktívne premenné
+    const showProducts = ref(false);
+    const topProducts = ref([]);
+
+    // Metódy
+    const loadTopProducts = () => {
+      topProducts.value = productsData.products.filter(
+        (product) => product.slug === "top-products"
+      );
+      showProducts.value = true;
     };
-  },
-  
-  setup() {
-    const counterStore = useCounterStore();
+
+    const goToArticles = () => {
+      router.push("/articles"); // Použitie routera na navigáciu
+    };
 
     return {
       count: counterStore.count,
@@ -36,22 +42,23 @@ export default {
       increment: counterStore.increment,
       decrement: counterStore.decrement,
       reset: counterStore.reset,
+
+      items: cartStore.items,
+      totalItems: computed(() => cartStore.totalItems),
+      totalAmount: computed(() => cartStore.totalAmount),
+      addToCart: cartStore.addToCart,
+      removeFromCart: cartStore.removeFromCart,
+      clearCart: cartStore.clearCart,
+
+      showProducts,
+      topProducts,
+      loadTopProducts,
+      goToArticles,
     };
-  },
-  methods: {
-    goToArticles() {
-      this.$router.push("/articles");
-    },
-    loadTopProducts() {
-      // Načítanie produktov na základe slugu
-      this.topProducts = productsData.products.filter(
-        (product) => product.slug === "top-products"
-      );
-      this.showProducts = true;
-    },
   },
 };
 </script>
+
 <template>
   <div class="home">
     <header class="home-header">
@@ -78,7 +85,6 @@ export default {
     <TopProducts v-if="showProducts" :products="topProducts" />
   </div>
 </template>
-
 
 <style scoped>
 .home-header {
