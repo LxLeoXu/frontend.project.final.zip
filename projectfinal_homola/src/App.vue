@@ -1,79 +1,76 @@
+
 <script setup>
+import { ref } from 'vue';
+import { useDarkModeStore } from '@/stores/darkMode';
+import { useRouter, useRoute } from 'vue-router';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import Gallery from './components/Gallery.vue'; // Import the Gallery component
+
+const darkModeStore = useDarkModeStore();
+const router = useRouter();
+const route = useRoute();
+
+const goToSettings = () => {
+  router.push('/settings');
+};
 </script>
 
 <template>
-  <!-- Header na vrchu každej stránky -->
-  <Header />
+  <v-app :class="{ 'dark-mode': darkModeStore.isDarkMode }">
+    <Header />
 
-  <!-- Dynamické vykresľovanie obsahu podstránok -->
-  <RouterView />
+    <!-- Ikona pre personalizované nastavenie -->
+    <div
+      v-if="route.name !== 'shop'"
+      class="settings-icon"
+      @click="goToSettings"
+    >
+      <v-icon>mdi-cog</v-icon>
+    </div>
 
-  <!-- Footer na spodku každej stránky -->
-  <Footer />
+    <!-- Prepínanie Dark Mode -->
+    <div class="dark-mode-toggle">
+      <v-btn @click="darkModeStore.toggleDarkMode">
+        <v-icon>{{ darkModeStore.isDarkMode ? 'mdi-moon-waxing-crescent' : 'mdi-white-balance-sunny' }}</v-icon>
+        <span>{{ darkModeStore.isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+      </v-btn>
+    </div>
+
+    <v-main>
+      <RouterView />
+    </v-main>
+    <Gallery />
+    <Footer />
+  </v-app>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.settings-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1000;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.light-mode {
+  background-color: #ffffff;
+  color: #000000;
 }
 </style>
