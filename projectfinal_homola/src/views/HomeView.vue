@@ -5,50 +5,50 @@ import productsData from "@/data/data.json";
 import { useCounterStore } from "@/stores/counter";
 import { useCartStore } from "@/stores/cart";
 import { ref, computed, onMounted } from "vue";
-import { useRouter } from "vue-router"; // Import Vue Router composable
+import { useRouter } from "vue-router";
 
 export default {
   name: "HomeView",
   components: { TopProducts, Gallery },
   setup() {
-    // Router
     const router = useRouter();
 
-    // Counter Store
     const counterStore = useCounterStore();
-
-    // Cart Store
     const cartStore = useCartStore();
 
-    // Lokálne reaktívne premenné
     const showProducts = ref(false);
     const topProducts = ref([]);
     const galleryImages = ref([]);
 
-    // Metódy
     const loadTopProducts = () => {
-      const filteredProducts = productsData.products.filter(
-        (product) => product.slug === "top-products"
-      );
-      if (filteredProducts.length > 0) {
-        // Update image paths for compatibility
-        topProducts.value = filteredProducts.map(product => ({
-          ...product,
-          image: product.image.replace('@/', '/public/')
-        }));
-        showProducts.value = true;
-      } else {
-        console.error("No top products found.");
+      try {
+        const filteredProducts = productsData.products.filter(
+          (product) => product.slug === "top-products"
+        );
+        if (filteredProducts.length > 0) {
+          topProducts.value = filteredProducts.map(product => ({
+            ...product,
+            image: product.image.replace("@/", "/public/"),
+          }));
+          showProducts.value = true;
+        } else {
+          console.warn("No top products found.");
+        }
+      } catch (error) {
+        console.error("Failed to load top products:", error);
       }
     };
 
-    const goToArticles = () => {
-      router.push("/articles"); // Použitie routera na navigáciu
+    const goToBlog = () => {
+      router.push("/blog");
     };
 
     const goToShop = () => {
-      router.push("/shop"); // Malé písmeno pre správnu URL
+      router.push("/shop");
     };
+    const goTopsrepair = () => {
+      router.push("/pcbuild")
+    }
 
     const loadGalleryImages = async () => {
       try {
@@ -58,7 +58,10 @@ export default {
         }
         const shopData = await response.json();
         galleryImages.value = shopData.categories.flatMap(category =>
-          category.products.map(product => "/images/" + product.image.split("/").pop())
+          category.products.map(product => product.image.startsWith("/images")
+            ? product.image
+            : `/images/${product.image.split("/").pop()}`
+          )
         );
       } catch (error) {
         console.error("Failed to load gallery images:", error);
@@ -66,7 +69,7 @@ export default {
     };
 
     onMounted(() => {
-      // Optional initialization if needed
+      loadGalleryImages();
     });
 
     return {
@@ -87,10 +90,11 @@ export default {
       showProducts,
       topProducts,
       loadTopProducts,
-      goToArticles,
+      goToBlog,
       goToShop,
+      goTopsrepair,
       galleryImages,
-      loadGalleryImages
+      loadGalleryImages,
     };
   },
 };
@@ -98,107 +102,127 @@ export default {
 
 <template>
   <div class="home">
+    <!-- Hlavný banner -->
     <header class="home-header">
-      <h1>Welcome to ElectroShop</h1>
+      <h1>Welcome to <span class="brand">ElectroShop</span></h1>
       <p>Your one-stop shop for the latest electronics and news.</p>
     </header>
 
+    <!-- Sekcia s funkciami -->
     <section class="features">
-      <div class="feature-box" @click="goToArticles">
+      <div class="feature-box" @click="goToBlog">
+        <v-icon>mdi-newspaper</v-icon>
         <h2>Latest News</h2>
         <p>Stay updated with the latest trends in electronics.</p>
       </div>
       <div class="feature-box" @click="loadTopProducts">
+        <v-icon>mdi-star-outline</v-icon>
         <h2>Top Products</h2>
         <p>Browse our collection of top-rated gadgets and devices.</p>
       </div>
       <div class="feature-box" @click="goToShop">
+        <v-icon>mdi-cart-outline</v-icon>
         <h2>Shop</h2>
         <p>Don't miss out on exclusive deals and discounts.</p>
       </div>
-      <div class="feature-box" @click="loadGalleryImages">
-        <h2>Gallery</h2>
-        <p>Click to load our image gallery.</p>
+      <div class="feature-box" @click="goTopsrepair">
+        <v-icon>mdi-cart-outline</v-icon>
+        <h2> build your own pc here</h2>
+        <p>pick your parts what you want to have in your own pc here or you can repair your pc here</p>
       </div>
     </section>
 
     <!-- Dynamicky zobrazené produkty -->
     <TopProducts v-if="showProducts" :products="topProducts" />
 
-    <!-- Gallery component -->
-    <section class="gallery-section" v-if="galleryImages.length > 0">
-      <h2>Image Gallery</h2>
-      <div class="gallery">
-        <img v-for="(image, index) in galleryImages" :key="index" :src="image" alt="Gallery Image" class="gallery-image" />
-      </div>
+    <!-- Galéria obrázkov -->
+    <section class="gallery-section">
+      <h2>Explore Our Collection</h2>
+      <Gallery />
     </section>
   </div>
 </template>
 
+
 <style scoped>
-.home-header {
-  text-align: center;
-  background-color: #007bff;
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+/* Hlavná stránka */
+.home {
+  font-family: "Roboto", sans-serif;
+  color: #333;
 }
 
+/* Hlavný banner */
+.home-header {
+  text-align: center;
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  color: white;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.home-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.home-header .brand {
+  color: #ffdd57;
+}
+
+/* Sekcia funkcií */
 .features {
   display: flex;
   gap: 20px;
   justify-content: center;
+  margin-bottom: 40px;
 }
 
 .feature-box {
   background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   text-align: center;
-  width: 250px;
+  width: 300px;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .feature-box:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .feature-box h2 {
   color: #007bff;
-  margin-bottom: 10px;
+  margin: 15px 0 10px;
 }
 
 .feature-box p {
   color: #555;
 }
 
+.feature-box v-icon {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+/* Sekcia galérie */
 .gallery-section {
-  margin-top: 40px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+  background: #f9f9f9;
+  padding: 30px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.gallery {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.gallery-image {
-  width: 200px;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
-
-.gallery-image:hover {
-  transform: scale(1.05);
+.gallery-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
 }
 </style>

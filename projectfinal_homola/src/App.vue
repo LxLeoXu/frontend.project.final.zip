@@ -1,11 +1,9 @@
-
 <script setup>
 import { ref } from 'vue';
 import { useDarkModeStore } from '@/stores/darkMode';
 import { useRouter, useRoute } from 'vue-router';
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-import Gallery from './components/Gallery.vue'; // Import the Gallery component
 
 const darkModeStore = useDarkModeStore();
 const router = useRouter();
@@ -18,9 +16,10 @@ const goToSettings = () => {
 
 <template>
   <v-app :class="{ 'dark-mode': darkModeStore.isDarkMode }">
+    <!-- Hlavný header -->
     <Header />
 
-    <!-- Ikona pre personalizované nastavenie -->
+    <!-- Ikona pre nastavenia -->
     <div
       v-if="route.name !== 'shop'"
       class="settings-icon"
@@ -29,18 +28,14 @@ const goToSettings = () => {
       <v-icon>mdi-cog</v-icon>
     </div>
 
-    <!-- Prepínanie Dark Mode -->
-    <div class="dark-mode-toggle">
-      <v-btn @click="darkModeStore.toggleDarkMode">
-        <v-icon>{{ darkModeStore.isDarkMode ? 'mdi-moon-waxing-crescent' : 'mdi-white-balance-sunny' }}</v-icon>
-        <span>{{ darkModeStore.isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
-      </v-btn>
-    </div>
+  
 
+    <!-- Obsah stránok -->
     <v-main>
       <RouterView />
     </v-main>
-    <Gallery />
+
+    <!-- Footer -->
     <Footer />
   </v-app>
 </template>

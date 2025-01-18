@@ -1,28 +1,22 @@
 <template>
   <div class="gallery-container">
-    <!-- Carousel pre obrázky -->
-    <v-carousel v-if="!expanded && !lightbox" show-arrows-on-hover>
-      <v-carousel-item
-        v-for="(product, index) in products"
-        :key="index"
-        :src="product.image"
-        :alt="product.name"
-        @click="openLightbox(product.image)"
-      />
-    </v-carousel>
-
-    <!-- Zväčšené obrázky vo forme galérie -->
-    <div v-else-if="expanded" class="expanded-gallery">
-      <div v-for="(product, index) in products" :key="index" class="thumbnail">
-        <img :src="product.image" :alt="product.name" @click="openLightbox(product.image)" />
-        <p>{{ product.name }}</p>
+    <!-- Horizontálne posúvanie obrázkov s tlačidlami -->
+    <div class="scroll-wrapper">
+      <button class="scroll-btn left" @click="scrollLeft">&#8249;</button>
+      <div class="scroll-container" ref="scrollContainer">
+        <div v-for="(product, index) in products" :key="index" class="image-item">
+          <img :src="product.image" :alt="product.name" @click="openLightbox(index)" />
+        </div>
       </div>
-      <v-btn @click="collapseGallery" class="collapse-btn">Close</v-btn>
+      <button class="scroll-btn right" @click="scrollRight">&#8250;</button>
     </div>
 
-    <!-- Lightbox pre zväčšený obrázok -->
-    <div v-if="lightbox" class="lightbox" @click="closeLightbox">
+    <!-- Lightbox pre zväčšený obrázok s tlačidlami na navigáciu -->
+    <div v-if="lightbox" class="lightbox">
+      <button class="lightbox-btn left" @click="previousImage">&#8249;</button>
       <img :src="currentImage" alt="Expanded Image" class="lightbox-image" />
+      <button class="lightbox-btn right" @click="nextImage">&#8250;</button>
+      <button class="close-btn" @click="closeLightbox">&times;</button>
     </div>
   </div>
 </template>
@@ -33,9 +27,9 @@ export default {
   data() {
     return {
       products: [],
-      expanded: false,
       lightbox: false,
       currentImage: '',
+      currentIndex: 0,
     };
   },
   created() {
@@ -58,19 +52,38 @@ export default {
         console.error('Error loading data:', error);
       }
     },
-    expandGallery() {
-      this.expanded = true;
-    },
-    collapseGallery() {
-      this.expanded = false;
-    },
-    openLightbox(image) {
+    openLightbox(index) {
       this.lightbox = true;
-      this.currentImage = image;
+      this.currentIndex = index;
+      this.currentImage = this.products[index].image;
     },
     closeLightbox() {
       this.lightbox = false;
       this.currentImage = '';
+    },
+    previousImage() {
+      if (this.currentIndex > 0) {
+        this.currentIndex -= 1;
+      } else {
+        this.currentIndex = this.products.length - 1; // Loop to last image
+      }
+      this.currentImage = this.products[this.currentIndex].image;
+    },
+    nextImage() {
+      if (this.currentIndex < this.products.length - 1) {
+        this.currentIndex += 1;
+      } else {
+        this.currentIndex = 0; // Loop to first image
+      }
+      this.currentImage = this.products[this.currentIndex].image;
+    },
+    scrollLeft() {
+      const container = this.$refs.scrollContainer;
+      container.scrollLeft -= 200;
+    },
+    scrollRight() {
+      const container = this.$refs.scrollContainer;
+      container.scrollLeft += 200;
     },
   },
 };
@@ -79,29 +92,63 @@ export default {
 <style scoped>
 .gallery-container {
   margin: 20px auto;
-  max-width: 80%;
+  max-width: 90%;
 }
-.expanded-gallery {
+.scroll-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 20px;
+  align-items: center;
+  position: relative;
 }
-.thumbnail {
-  width: 120px;
-  height: 120px;
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 10px;
+  scroll-behavior: smooth;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  flex-grow: 1;
+}
+.image-item {
+  flex: 0 0 auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
   overflow: hidden;
-  border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.3s;
 }
-.thumbnail img {
+.image-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.collapse-btn {
-  margin-top: 20px;
+.image-item:hover {
+  transform: scale(1.05);
+}
+.scroll-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+}
+.scroll-btn.left {
+  left: 10px;
+}
+.scroll-btn.right {
+  right: 10px;
+}
+.scroll-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 .lightbox {
   position: fixed;
@@ -119,5 +166,41 @@ export default {
   max-width: 90%;
   max-height: 90%;
   border-radius: 10px;
+}
+.lightbox-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+}
+.lightbox-btn.left {
+  left: 20px;
+}
+.lightbox-btn.right {
+  right: 20px;
+}
+.lightbox-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: #f00;
 }
 </style>
