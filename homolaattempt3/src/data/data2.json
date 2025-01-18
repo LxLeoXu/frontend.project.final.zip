@@ -1,0 +1,166 @@
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Smartphones",
+            "products": [
+                {
+                    "id": 1,
+                    "name": "iPhone 14",
+                    "price": 899,
+                    "image": "/images/iphone.png",
+                    "description": "Latest Apple smartphone."
+                },
+                {
+                    "id": 2,
+                    "name": "Samsung Galaxy S22",
+                    "price": 799,
+                    "image": "/images/galaxy.png",
+                    "description": "Flagship Samsung smartphone."
+                },
+                {
+                    "id": 13,
+                    "name": "Google Pixel 7",
+                    "price": 649,
+                    "image": "/images/pixel.png",
+                    "description": "Google's latest Android phone."
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Laptops",
+            "products": [
+                {
+                    "id": 3,
+                    "name": "MacBook Pro",
+                    "price": 1299,
+                    "image": "/images/macbook.png",
+                    "description": "Apple's powerful laptop."
+                },
+                {
+                    "id": 4,
+                    "name": "Dell XPS 13",
+                    "price": 1099,
+                    "image": "/images/dell.png",
+                    "description": "Premium ultrabook by Dell."
+                },
+                {
+                    "id": 14,
+                    "name": "HP Spectre x360",
+                    "price": 1199,
+                    "image": "/images/hp_spectre.png",
+                    "description": "Convertible laptop with great performance."
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Accessories",
+            "products": [
+                {
+                    "id": 5,
+                    "name": "AirPods Pro",
+                    "price": 249,
+                    "image": "/images/airpods.png",
+                    "description": "Apple's wireless earbuds."
+                },
+                {
+                    "id": 6,
+                    "name": "Logitech MX Master 3",
+                    "price": 99,
+                    "image": "/images/logitech.png",
+                    "description": "High-performance mouse."
+                },
+                {
+                    "id": 15,
+                    "name": "Samsung Galaxy Buds 2",
+                    "price": 149,
+                    "image": "/images/buds.png",
+                    "description": "Wireless earbuds by Samsung."
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Gaming",
+            "products": [
+                {
+                    "id": 7,
+                    "name": "PlayStation 5",
+                    "price": 499,
+                    "image": "/images/ps5.png",
+                    "description": "Next-gen gaming console."
+                },
+                {
+                    "id": 8,
+                    "name": "Xbox Series X",
+                    "price": 499,
+                    "image": "/images/xbox.png",
+                    "description": "Microsoft's flagship console."
+                },
+                {
+                    "id": 16,
+                    "name": "Nintendo Switch OLED",
+                    "price": 349,
+                    "image": "/images/switch.png",
+                    "description": "Hybrid gaming console."
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Home Appliances",
+            "products": [
+                {
+                    "id": 9,
+                    "name": "Dyson V15",
+                    "price": 699,
+                    "image": "/images/dyson.png",
+                    "description": "Powerful cordless vacuum."
+                },
+                {
+                    "id": 10,
+                    "name": "Instant Pot Duo",
+                    "price": 129,
+                    "image": "/images/instantpot.png",
+                    "description": "Multi-functional pressure cooker."
+                },
+                {
+                    "id": 17,
+                    "name": "Philips Air Fryer",
+                    "price": 199,
+                    "image": "/images/airfryer.png",
+                    "description": "Healthy cooking appliance."
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Books",
+            "products": [
+                {
+                    "id": 11,
+                    "name": "The Great Gatsby",
+                    "price": 10,
+                    "image": "/images/gatsby.png",
+                    "description": "Classic American novel."
+                },
+                {
+                    "id": 12,
+                    "name": "1984",
+                    "price": 15,
+                    "image": "/images/1984.png",
+                    "description": "Dystopian novel by George Orwell."
+                },
+                {
+                    "id": 18,
+                    "name": "To Kill a Mockingbird",
+                    "price": 12,
+                    "image": "/images/mockingbird.png",
+                    "description": "A novel by Harper Lee."
+                }
+            ]
+        }
+    ]
+}
