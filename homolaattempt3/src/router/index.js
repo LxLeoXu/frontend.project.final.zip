@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import BlogView from '../views/BlogView.vue';
 import ShopView from '../views/ShopView.vue';
-import PcBuilderView from '@/views/PcBuilderView.vue';
 //import { name } from '@vue/eslint-config-prettier/skip-formatting';
 
 
@@ -29,11 +28,7 @@ const routes = [
       },
     ],
   },
-  {
-    path: '/pcbuild',
-    name: 'pcbuild',
-    component: PcBuilderView,
-  },
+
 ];
 
 const router = createRouter({

@@ -36,9 +36,7 @@
           <li class="nav-item">
             <RouterLink class="nav-link" to="/shop">Shop</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/pcbuild">PC</RouterLink>
-          </li>
+
         </ul>
 
         <!-- Tlačidlo pre Light/Dark Mode -->

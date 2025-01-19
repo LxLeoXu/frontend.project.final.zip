@@ -12,19 +12,19 @@
           <p>Price: {{ item.price }} €</p>
           <p>Quantity: {{ item.quantity }}</p>
         </div>
-        <button @click="removeFromCart(item.id)">Remove</button>
+        <button @click="removeItem(item)">Remove</button>
       </div>
       <div class="cart-summary">
         <p>Total Items: {{ totalItems }}</p>
         <p>Total Amount: {{ totalAmount }} €</p>
-        <button @click="goToCheckout">Pay Now</button>
+        <!--<button @click="goToCheckout">Pay Now</button>-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useCartStore } from "@/stores/cart";
 
@@ -32,26 +32,22 @@ export default {
   name: "ShoppingCart",
   setup() {
     const cartStore = useCartStore();
-    const router = useRouter(); // Používame Vue Router
-    const showCheckoutModal = ref(false); // Premenná na modálne okno (ak nepoužívaš router)
+    const router = useRouter();
+
+    const removeItem = (item) => {
+      cartStore.removeFromCart(item.id, item.type);
+    };
 
     const goToCheckout = () => {
-      console.log("Pay Now button clicked");
-      
-      // Presmerovanie na stránku Checkout, ak používaš Vue Router
       router.push("/shop/checkout");
-      
-      // Ak chceš použiť modálne okno, odkomentuj nasledujúci riadok
-      // showCheckoutModal.value = true;
     };
 
     return {
-      cartItems: cartStore.items,
-      totalAmount: cartStore.totalAmount,
-      totalItems: cartStore.totalItems,
-      removeFromCart: cartStore.removeFromCart,
+      cartItems: computed(() => cartStore.items),
+      totalAmount: computed(() => cartStore.totalAmount),
+      totalItems: computed(() => cartStore.totalItems),
+      removeItem,
       goToCheckout,
-      showCheckoutModal,
     };
   },
 };

@@ -1,124 +1,211 @@
 {
-    "categories": [
+  "categories": [
+    {
+      "id": 1,
+      "name": "Power Supply",
+      "products": [
         {
-            "id": 1,
-            "name": "Smartphones",
-            "products": [
-                {
-                    "id": 1,
-                    "name": "iPhone 14",
-                    "price": 899,
-                    "image": "/images/iphone.png",
-                    "description": "Latest Apple smartphone."
-                },
-                {
-                    "id": 2,
-                    "name": "Samsung Galaxy S22",
-                    "price": 799,
-                    "image": "/images/galaxy.png",
-                    "description": "Flagship Samsung smartphone."
-                }
-            ]
+          "id": 1,
+          "name": "Corsair RM750x 750W",
+          "price": 130,
+          "stock": 10,
+          "performance": 50,
+          "image": "/images/corsair-rm750x.png"
         },
         {
-            "id": 2,
-            "name": "Laptops",
-            "products": [
-                {
-                    "id": 3,
-                    "name": "MacBook Pro",
-                    "price": 1299,
-                    "image": "/images/macbook.png",
-                    "description": "Apple's powerful laptop."
-                },
-                {
-                    "id": 4,
-                    "name": "Dell XPS 13",
-                    "price": 1099,
-                    "image": "/images/dell.png",
-                    "description": "Premium ultrabook by Dell."
-                }
-            ]
+          "id": 2,
+          "name": "EVGA SuperNOVA 650 G5",
+          "price": 100,
+          "stock": 8,
+          "performance": 45,
+          "image": "/images/evga-supernova-650.png"
         },
         {
-            "id": 3,
-            "name": "Accessories",
-            "products": [
-                {
-                    "id": 5,
-                    "name": "AirPods Pro",
-                    "price": 249,
-                    "image": "/images/airpods.png",
-                    "description": "Apple's wireless earbuds."
-                },
-                {
-                    "id": 6,
-                    "name": "Logitech MX Master 3",
-                    "price": 99,
-                    "image": "/images/logitech.png",
-                    "description": "High-performance mouse."
-                }
-            ]
-        },
-        {
-            "id": 4,
-            "name": "Gaming",
-            "products": [
-                {
-                    "id": 7,
-                    "name": "PlayStation 5",
-                    "price": 499,
-                    "image": "/images/ps5.png",
-                    "description": "Next-gen gaming console."
-                },
-                {
-                    "id": 8,
-                    "name": "Xbox Series X",
-                    "price": 499,
-                    "image": "/images/xbox.png",
-                    "description": "Microsoft's flagship console."
-                }
-            ]
-        },
-        {
-            "id": 5,
-            "name": "Home Appliances",
-            "products": [
-                {
-                    "id": 9,
-                    "name": "Dyson V15",
-                    "price": 699,
-                    "image": "/images/dyson.png",
-                    "description": "Powerful cordless vacuum."
-                },
-                {
-                    "id": 10,
-                    "name": "Instant Pot Duo",
-                    "price": 129,
-                    "image": "/images/instantpot.png",
-                    "description": "Multi-functional pressure cooker."
-                }
-            ]
-        },
-        {
-            "id": 6,
-            "name": "Books",
-            "products": [
-                {
-                    "id": 11,
-                    "name": "The Great Gatsby",
-                    "price": 10,
-                    "image": "/images/gatsby.png",
-                    "description": "Classic American novel."
-                },
-                {
-                    "id": 12,
-                    "name": "1984",
-                    "price": 15,
-                    "image": "/images/1984.png",
-                    "description": "Dystopian novel by George Orwell."
-                }
-            ]
+          "id": 3,
+          "name": "Seasonic PRIME TX-850",
+          "price": 250,
+          "stock": 0,
+          "performance": 60,
+          "image": "/images/seasonic-prime-tx-850.png"
         }
-    ]
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Storage",
+      "products": [
+        {
+          "id": 1,
+          "name": "Samsung 970 EVO 1TB NVMe SSD",
+          "price": 120,
+          "stock": 15,
+          "performance": 70,
+          "image": "/images/samsung-970-evo.png"
+        },
+        {
+          "id": 2,
+          "name": "Seagate Barracuda 2TB HDD",
+          "price": 70,
+          "stock": 10,
+          "performance": 30,
+          "image": "/images/seagate-barracuda.png"
+        },
+        {
+          "id": 3,
+          "name": "Crucial P5 Plus 2TB NVMe SSD",
+          "price": 400,
+          "stock": 0,
+          "performance": 85,
+          "image": "/images/crucial-p5-plus.png"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Motherboards",
+      "products": [
+        {
+          "id": 1,
+          "name": "MSI Z690 PRO",
+          "price": 200,
+          "stock": 5,
+          "socket": "LGA1700",
+          "image": "/images/msi-z690-pro.png"
+        },
+        {
+          "id": 2,
+          "name": "Gigabyte B550 AORUS",
+          "price": 150,
+          "stock": 8,
+          "socket": "AM4",
+          "image": "/images/gigabyte-b550-aorus.png"
+        },
+        {
+          "id": 3,
+          "name": "ASUS ROG Strix Z690",
+          "price": 300,
+          "stock": 0,
+          "socket": "LGA1700",
+          "image": "/images/asus-rog-strix-z690.png"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Memory",
+      "products": [
+        {
+          "id": 1,
+          "name": "16GB DDR4 3200MHz",
+          "price": 80,
+          "stock": 20,
+          "performance": 60,
+          "image": "/images/ddr4-16gb.png"
+        },
+        {
+          "id": 2,
+          "name": "32GB DDR5 4800MHz",
+          "price": 150,
+          "stock": 12,
+          "performance": 75,
+          "image": "/images/ddr5-32gb.png"
+        },
+        {
+          "id": 3,
+          "name": "64GB DDR5 6400MHz",
+          "price": 300,
+          "stock": 0,
+          "performance": 90,
+          "image": "/images/ddr5-64gb.png"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "GPUs",
+      "products": [
+        {
+          "id": 1,
+          "name": "NVIDIA RTX 3060",
+          "price": 350,
+          "stock": 8,
+          "performance": 90,
+          "image": "/images/nvidia-rtx-3060.png"
+        },
+        {
+          "id": 2,
+          "name": "AMD RX 6700 XT",
+          "price": 400,
+          "stock": 5,
+          "performance": 92,
+          "image": "/images/amd-rx-6700-xt.png"
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA RTX 4090",
+          "price": 1600,
+          "stock": 0,
+          "performance": 150,
+          "image": "/images/nvidia-rtx-4090.png"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Processors",
+      "products": [
+        {
+          "id": 1,
+          "name": "Intel Core i5-12600K",
+          "price": 250,
+          "stock": 10,
+          "socket": "LGA1700",
+          "image": "/images/intel-core-i5-12600k.png"
+        },
+        {
+          "id": 2,
+          "name": "AMD Ryzen 5 5600X",
+          "price": 200,
+          "stock": 15,
+          "socket": "AM4",
+          "image": "/images/amd-ryzen-5-5600x.png"
+        },
+        {
+          "id": 3,
+          "name": "Intel Core i9-12900K",
+          "price": 600,
+          "stock": 0,
+          "socket": "LGA1700",
+          "image": "/images/intel-core-i9-12900k.png"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Case",
+      "products": [
+        {
+          "id": 1,
+          "name": "NZXT H510",
+          "price": 90,
+          "stock": 10,
+          "image": "/images/nzxt-h510.png"
+        },
+        {
+          "id": 2,
+          "name": "Cooler Master MasterBox TD500",
+          "price": 110,
+          "stock": 7,
+          "image": "/images/cooler-master-td500.png"
+        },
+        {
+          "id": 3,
+          "name": "Lian Li PC-O11 Dynamic",
+          "price": 200,
+          "stock": 0,
+          "image": "/images/lian-li-pc-o11.png"
+        }
+      ]
+    }
+  ]
 }

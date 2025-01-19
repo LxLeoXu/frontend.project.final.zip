@@ -26,7 +26,7 @@ export default {
           (product) => product.slug === "top-products"
         );
         if (filteredProducts.length > 0) {
-          topProducts.value = filteredProducts.map(product => ({
+          topProducts.value = filteredProducts.map((product) => ({
             ...product,
             image: product.image.replace("@/", "/public/"),
           }));
@@ -46,9 +46,6 @@ export default {
     const goToShop = () => {
       router.push("/shop");
     };
-    const goTopsrepair = () => {
-      router.push("/pcbuild")
-    }
 
     const loadGalleryImages = async () => {
       try {
@@ -57,10 +54,11 @@ export default {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const shopData = await response.json();
-        galleryImages.value = shopData.categories.flatMap(category =>
-          category.products.map(product => product.image.startsWith("/images")
-            ? product.image
-            : `/images/${product.image.split("/").pop()}`
+        galleryImages.value = shopData.categories.flatMap((category) =>
+          category.products.map((product) =>
+            product.image.startsWith("/images")
+              ? product.image
+              : `/images/${product.image.split("/").pop()}`
           )
         );
       } catch (error) {
@@ -92,7 +90,7 @@ export default {
       loadTopProducts,
       goToBlog,
       goToShop,
-      goTopsrepair,
+
       galleryImages,
       loadGalleryImages,
     };
@@ -102,13 +100,13 @@ export default {
 
 <template>
   <div class="home">
-    <!-- Hlavný banner -->
+    <!-- Main banner -->
     <header class="home-header">
       <h1>Welcome to <span class="brand">ElectroShop</span></h1>
       <p>Your one-stop shop for the latest electronics and news.</p>
     </header>
 
-    <!-- Sekcia s funkciami -->
+    <!-- Features section -->
     <section class="features">
       <div class="feature-box" @click="goToBlog">
         <v-icon>mdi-newspaper</v-icon>
@@ -125,17 +123,12 @@ export default {
         <h2>Shop</h2>
         <p>Don't miss out on exclusive deals and discounts.</p>
       </div>
-      <div class="feature-box" @click="goTopsrepair">
-        <v-icon>mdi-cart-outline</v-icon>
-        <h2> build your own pc here</h2>
-        <p>pick your parts what you want to have in your own pc here or you can repair your pc here</p>
-      </div>
     </section>
 
-    <!-- Dynamicky zobrazené produkty -->
+    <!-- Dynamically displayed top products -->
     <TopProducts v-if="showProducts" :products="topProducts" />
 
-    <!-- Galéria obrázkov -->
+    <!-- Gallery section -->
     <section class="gallery-section">
       <h2>Explore Our Collection</h2>
       <Gallery />
@@ -143,15 +136,14 @@ export default {
   </div>
 </template>
 
-
 <style scoped>
-/* Hlavná stránka */
+/* Main page styles */
 .home {
   font-family: "Roboto", sans-serif;
   color: #333;
 }
 
-/* Hlavný banner */
+/* Main banner styles */
 .home-header {
   text-align: center;
   background: linear-gradient(90deg, #007bff, #6610f2);
@@ -172,7 +164,7 @@ export default {
   color: #ffdd57;
 }
 
-/* Sekcia funkcií */
+/* Features section */
 .features {
   display: flex;
   gap: 20px;
@@ -210,7 +202,7 @@ export default {
   color: #007bff;
 }
 
-/* Sekcia galérie */
+/* Gallery section */
 .gallery-section {
   background: #f9f9f9;
   padding: 30px 20px;

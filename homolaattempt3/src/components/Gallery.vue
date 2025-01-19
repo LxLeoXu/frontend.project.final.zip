@@ -4,8 +4,17 @@
     <div class="scroll-wrapper">
       <button class="scroll-btn left" @click="scrollLeft">&#8249;</button>
       <div class="scroll-container" ref="scrollContainer">
-        <div v-for="(product, index) in products" :key="index" class="image-item">
-          <img :src="product.image" :alt="product.name" @click="openLightbox(index)" />
+        <div
+          v-for="(product, index) in products"
+          :key="index"
+          class="image-item"
+        >
+          <img
+            v-if="product.image"
+            :src="product.image"
+            :alt="product.name || 'Product Image'"
+            @click="openLightbox(index)"
+          />
         </div>
       </div>
       <button class="scroll-btn right" @click="scrollRight">&#8250;</button>
@@ -23,12 +32,12 @@
 
 <script>
 export default {
-  name: 'Gallery',
+  name: "Gallery",
   data() {
     return {
       products: [],
       lightbox: false,
-      currentImage: '',
+      currentImage: "",
       currentIndex: 0,
     };
   },
@@ -38,18 +47,21 @@ export default {
   methods: {
     async loadProducts() {
       try {
-        const response = await fetch('/data/data2.json');
+        const response = await fetch("/data/data2.json");
         const jsonData = await response.json();
-        this.products = jsonData.categories.flatMap(category =>
-          category.products.map(product => ({
+        // Ensure data is valid and handle missing images
+        this.products = jsonData.categories.flatMap((category) =>
+          category.products.map((product) => ({
             ...product,
-            image: product.image.startsWith('/images')
-              ? product.image
-              : `/images${product.image}`,
+            image: product.image
+              ? product.image.startsWith("/images")
+                ? product.image
+                : `/images${product.image}`
+              : "/images/default.jpg", // Fallback image
           }))
         );
       } catch (error) {
-        console.error('Error loading data:', error);
+        console.error("Error loading data:", error);
       }
     },
     openLightbox(index) {
@@ -59,7 +71,7 @@ export default {
     },
     closeLightbox() {
       this.lightbox = false;
-      this.currentImage = '';
+      this.currentImage = "";
     },
     previousImage() {
       if (this.currentIndex > 0) {
